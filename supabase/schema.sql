@@ -43,7 +43,7 @@ create table public.products (
 );
 create index products_category_active on public.products(category_id) where active;
 create table public.site_settings (id integer primary key check (id = 1), data jsonb not null default '{}');
-insert into public.site_settings(id, data) values (1, '{"store_name":"Ahmed","tagline":"L''éclairage, pensé pour vous.","currency":"DZD","locale":"fr-DZ"}');
+insert into public.site_settings(id, data) values (1, '{"store_name":"Ahmed","tagline":"L''éclairage, pensé pour vous.","currency":"DZD","locale":"fr-DZ","logo_url":"/assets/ahmed-logo.jpg"}');
 insert into public.categories(id, name, name_ar, name_en, icon, position) values
   ('pendants','Suspensions','ثريات معلقة','Pendants','pendant',1),
   ('ceiling-lamps','Plafonniers','مصابيح سقف','Ceiling lamps','ceiling',2),

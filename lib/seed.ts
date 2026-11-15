@@ -331,7 +331,7 @@ export const seed: StoreData = {
     tagline_en: "Light, considered.",
     currency: "DZD",
     locale: "fr-DZ",
-    logo_url: "",
+    logo_url: "/assets/ahmed-logo.jpg",
     announcement:
       "Des luminaires pensés avec soin, pour les lieux où vous vivez.",
     announcement_ar: "إضاءة راقية مصممة بعناية للمساحات التي تعتز بها.",

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: { default: "Ahmed — Light, considered.", template: "%s — Ahmed" },
   description:
     "Thoughtfully chosen lighting for everyday living. Explore pendants, floor lamps, table lamps and architectural lighting.",
-  icons: { icon: "/assets/favicon.svg" },
+  icons: { icon: "/assets/ahmed-logo.jpg" },
 };
 export const viewport: Viewport = { themeColor: "#f5f2eb" };
 export default function RootLayout({
