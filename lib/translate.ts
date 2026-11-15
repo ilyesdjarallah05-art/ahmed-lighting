@@ -1,6 +1,15 @@
 // Intelligent lighting domain translation engine (French -> Arabic & English)
 
 const lightingGlossary: Record<string, { ar: string; en: string }> = {
+  // Showrooms & virtual tours
+  "visite 360°": { ar: "جولة 360°", en: "360° tour" },
+  showroom: { ar: "معرض", en: "Showroom" },
+  "salle d'exposition": { ar: "قاعة العرض", en: "Showroom" },
+  "entrée du showroom": { ar: "مدخل المعرض", en: "Showroom entrance" },
+  "hall d'entrée": { ar: "بهو المدخل", en: "Entrance hall" },
+  "galerie principale": { ar: "الرواق الرئيسي", en: "Main gallery" },
+  "espace suivant": { ar: "المساحة التالية", en: "Next space" },
+  "retour à l'entrée": { ar: "العودة إلى المدخل", en: "Back to entrance" },
   // Product Types
   "suspension en lin": { ar: "ثريا معلقة من الكتان", en: "Linen pendant" },
   suspension: { ar: "ثريا معلقة", en: "Pendant light" },
@@ -22,11 +31,26 @@ const lightingGlossary: Record<string, { ar: string; en: string }> = {
   lustre: { ar: "نجفة فاخرة", en: "Chandelier" },
 
   // Materials & Finishes
-  "lin · acier thermolaqué": { ar: "كتان · فولاذ مطلي", en: "Linen · powder-coated steel" },
-  "céramique texturée · lin": { ar: "سيراميك ذو ملمس · كتان", en: "Textured ceramic · linen" },
-  "acier thermolaqué · lin": { ar: "فولاذ مطلي · كتان", en: "Powder-coated steel · linen" },
-  "laiton brossé · diffuseur acrylique": { ar: "نحاس مصقول · موزع أكريليك", en: "Brushed brass · acrylic diffuser" },
-  "aluminium · diffuseur dépoli": { ar: "ألومنيوم · موزع ضوء غير لامع", en: "Aluminium · frosted diffuser" },
+  "lin · acier thermolaqué": {
+    ar: "كتان · فولاذ مطلي",
+    en: "Linen · powder-coated steel",
+  },
+  "céramique texturée · lin": {
+    ar: "سيراميك ذو ملمس · كتان",
+    en: "Textured ceramic · linen",
+  },
+  "acier thermolaqué · lin": {
+    ar: "فولاذ مطلي · كتان",
+    en: "Powder-coated steel · linen",
+  },
+  "laiton brossé · diffuseur acrylique": {
+    ar: "نحاس مصقول · موزع أكريليك",
+    en: "Brushed brass · acrylic diffuser",
+  },
+  "aluminium · diffuseur dépoli": {
+    ar: "ألومنيوم · موزع ضوء غير لامع",
+    en: "Aluminium · frosted diffuser",
+  },
   aluminium: { ar: "ألومنيوم", en: "Aluminium" },
   laiton: { ar: "نحاس", en: "Brass" },
   "laiton brossé": { ar: "نحاس مصقول", en: "Brushed brass" },
@@ -58,7 +82,11 @@ const wordReplacements: { fr: RegExp; ar: string; en: string }[] = [
   { fr: /\bune courbe douce\b/gi, ar: "انحناءة لطيفة", en: "A gentle curve" },
   { fr: /\blueur plus douce\b/gi, ar: "توهج أكثر نعومة", en: "softer glow" },
   { fr: /\blumière douce\b/gi, ar: "إضاءة هادئة وناعمة", en: "soft light" },
-  { fr: /\blumière chaleureuse\b/gi, ar: "إضاءة دافئة ومريحة", en: "warm light" },
+  {
+    fr: /\blumière chaleureuse\b/gi,
+    ar: "إضاءة دافئة ومريحة",
+    en: "warm light",
+  },
   { fr: /\bchaleur\b/gi, ar: "الدفء", en: "warmth" },
   { fr: /\bmaison\b/gi, ar: "المنزل", en: "home" },
   { fr: /\bsalon\b/gi, ar: "غرفة المعيشة", en: "living room" },
@@ -66,13 +94,24 @@ const wordReplacements: { fr: RegExp; ar: string; en: string }[] = [
   { fr: /\btable à manger\b/gi, ar: "طاولة الطعام", en: "dining table" },
   { fr: /\bcouloir\b/gi, ar: "الممرات", en: "hallway" },
   { fr: /\bcuisine\b/gi, ar: "المطبخ", en: "kitchen" },
-  { fr: /\bsans complications\b/gi, ar: "بكل سهولة ويسر", en: "without complications" },
+  {
+    fr: /\bsans complications\b/gi,
+    ar: "بكل سهولة ويسر",
+    en: "without complications",
+  },
   { fr: /\bfait pour durer\b/gi, ar: "صُنع ليدوم طويلاً", en: "made to last" },
   { fr: /\bdesign moderne\b/gi, ar: "تصميم عصري أنيق", en: "modern design" },
-  { fr: /\bambiance intime\b/gi, ar: "أجواء حميمية مريحة", en: "intimate ambiance" },
+  {
+    fr: /\bambiance intime\b/gi,
+    ar: "أجواء حميمية مريحة",
+    en: "intimate ambiance",
+  },
 ];
 
-export function translateLightingText(text: string, targetLang: "ar" | "en"): string {
+export function translateLightingText(
+  text: string,
+  targetLang: "ar" | "en",
+): string {
   if (!text || !text.trim()) return "";
   const trimmed = text.trim();
   const lower = trimmed.toLowerCase();

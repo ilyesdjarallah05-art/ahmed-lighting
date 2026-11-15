@@ -1,6 +1,79 @@
 import type { StoreData } from "./types";
 
 export const seed: StoreData = {
+  tours: [
+    {
+      id: "00000000-0000-4000-9000-000000000001",
+      title: "Showroom Ahmed — Alger",
+      title_ar: "معرض زيتكس — الجزائر",
+      title_en: "Ahmed showroom — Algiers",
+      description:
+        "Découvrez nos luminaires dans leur espace, puis avancez d’une galerie à l’autre.",
+      description_ar:
+        "اكتشفوا تشكيلتنا من وحدات الإنارة داخل المعرض وتنقلوا بين أروقته.",
+      description_en:
+        "See our lighting in context and move from one gallery to the next.",
+      location: "Alger, Algérie",
+      location_ar: "الجزائر العاصمة، الجزائر",
+      location_en: "Algiers, Algeria",
+      cover_image: "/assets/tour-entree.png",
+      active: true,
+      position: 1,
+      created_at: "2026-09-19T09:00:00Z",
+      scenes: [
+        {
+          id: "entree",
+          title: "Entrée du showroom",
+          title_ar: "مدخل المعرض",
+          title_en: "Showroom entrance",
+          description: "L’accueil et les premières collections décoratives.",
+          description_ar: "الاستقبال وأولى مجموعات الإنارة الديكورية.",
+          description_en: "The welcome area and first decorative collections.",
+          image_url: "/assets/tour-entree.png",
+          pitch: 0,
+          yaw: 8,
+          hfov: 100,
+          position: 0,
+          hotspots: [
+            {
+              id: "to-gallery",
+              target_scene_id: "galerie",
+              text: "Galerie principale",
+              text_ar: "الرواق الرئيسي",
+              text_en: "Main gallery",
+              pitch: -2,
+              yaw: 42,
+            },
+          ],
+        },
+        {
+          id: "galerie",
+          title: "Galerie principale",
+          title_ar: "الرواق الرئيسي",
+          title_en: "Main gallery",
+          description: "Suspensions, lampadaires et ambiances chaudes.",
+          description_ar: "ثريات ومصابيح أرضية وأجواء دافئة.",
+          description_en: "Pendants, floor lamps and warm lighting scenes.",
+          image_url: "/assets/tour-galerie.png",
+          pitch: 0,
+          yaw: -18,
+          hfov: 100,
+          position: 1,
+          hotspots: [
+            {
+              id: "to-entrance",
+              target_scene_id: "entree",
+              text: "Retour à l’entrée",
+              text_ar: "العودة إلى المدخل",
+              text_en: "Back to entrance",
+              pitch: -3,
+              yaw: -128,
+            },
+          ],
+        },
+      ],
+    },
+  ],
   products: [
     {
       active: true,
@@ -252,14 +325,15 @@ export const seed: StoreData = {
     },
   ],
   settings: {
-    store_name: "zitex",
+    store_name: "Ahmed",
     tagline: "L'éclairage, pensé pour vous.",
     tagline_ar: "إضاءة راقية، صُممت من أجلك.",
     tagline_en: "Light, considered.",
     currency: "DZD",
     locale: "fr-DZ",
     logo_url: "",
-    announcement: "Des luminaires pensés avec soin, pour les lieux où vous vivez.",
+    announcement:
+      "Des luminaires pensés avec soin, pour les lieux où vous vivez.",
     announcement_ar: "إضاءة راقية مصممة بعناية للمساحات التي تعتز بها.",
     announcement_en: "Thoughtful lighting, for the places you call home.",
     hero_description:
@@ -276,7 +350,7 @@ export const seed: StoreData = {
     about_en:
       "From the quiet glow beside your bed to the pendant that brings everyone to the table, we believe good lighting makes everyday moments feel a little more special.",
     phone: "+213 555 12 34 56",
-    email: "contact@zitex-lighting.com",
+    email: "contact@ahmed-lighting.com",
     address: "Alger, Algérie",
     address_ar: "الجزائر العاصمة، الجزائر",
     address_en: "Algiers, Algeria",

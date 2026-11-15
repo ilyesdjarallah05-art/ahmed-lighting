@@ -44,7 +44,7 @@ export function useStore() {
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<StoreData>(
-    configured ? { ...seed, products: [], categories: [] } : seed,
+    configured ? { ...seed, products: [], categories: [], tours: [] } : seed,
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -62,7 +62,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setLangState(nextLang);
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("zitex-lang", nextLang);
+        localStorage.setItem("ahmed-lang", nextLang);
       } catch {
         /* storage may be blocked */
       }
@@ -89,13 +89,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setDemo(isDemo());
     void refresh();
     try {
-      const savedLang = (localStorage.getItem("zitex-lang") as Language) || "fr";
+      const savedLang =
+        (localStorage.getItem("ahmed-lang") as Language) || "fr";
       if (["fr", "ar", "en"].includes(savedLang)) {
         setLangState(savedLang);
         document.documentElement.lang = savedLang;
         document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
       }
-      const saved = JSON.parse(localStorage.getItem("zitex-cart") || "[]");
+      const saved = JSON.parse(localStorage.getItem("ahmed-cart") || "[]");
       if (Array.isArray(saved))
         setCart(
           saved
@@ -110,15 +111,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
             )
             .slice(0, 30),
         );
-      setLights(localStorage.getItem("zitex-lights") === "true");
+      setLights(localStorage.getItem("ahmed-lights") === "true");
     } catch {
       /* fresh session */
     }
     setHydrated(true);
 
     const onStorage = (e: StorageEvent) => {
-      if (e.key === "zitex-demo-v2") void refresh();
-      if (e.key === "zitex-lang" && e.newValue) {
+      if (e.key === "ahmed-demo-v2") void refresh();
+      if (e.key === "ahmed-lang" && e.newValue) {
         const nextLang = e.newValue as Language;
         if (["fr", "ar", "en"].includes(nextLang)) {
           setLangState(nextLang);
@@ -140,7 +141,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     document.body.classList.toggle("lights-on", lights);
     if (hydrated)
       try {
-        localStorage.setItem("zitex-lights", String(lights));
+        localStorage.setItem("ahmed-lights", String(lights));
       } catch {
         /* optional preference */
       }
@@ -149,7 +150,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated)
       try {
-        localStorage.setItem("zitex-cart", JSON.stringify(cart));
+        localStorage.setItem("ahmed-cart", JSON.stringify(cart));
       } catch {
         /* still works in memory */
       }

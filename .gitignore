@@ -8,3 +8,5 @@ next-env.d.ts
 test-results/
 .preview.log
 output/
+
+supabase/.temp/

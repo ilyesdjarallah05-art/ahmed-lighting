@@ -78,11 +78,11 @@ export function OrderPage() {
       let request_id = crypto.randomUUID();
       try {
         const previous = JSON.parse(
-          sessionStorage.getItem("zitex-order-attempt") || "null",
+          sessionStorage.getItem("ahmed-order-attempt") || "null",
         );
         if (previous?.signature === signature) request_id = previous.id;
         sessionStorage.setItem(
-          "zitex-order-attempt",
+          "ahmed-order-attempt",
           JSON.stringify({ id: request_id, signature }),
         );
       } catch {
@@ -99,7 +99,7 @@ export function OrderPage() {
       setSuccess(result);
       s.setCart([]);
       try {
-        sessionStorage.removeItem("zitex-order-attempt");
+        sessionStorage.removeItem("ahmed-order-attempt");
       } catch {
         /* optional */
       }

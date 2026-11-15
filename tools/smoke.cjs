@@ -14,9 +14,9 @@ const fs = require("node:fs");
   await page.goto("http://localhost:3000");
   await page.waitForSelector(".product-card");
   await page.evaluate(() => {
-    localStorage.removeItem("zitex-demo-v2");
-    localStorage.removeItem("zitex-cart");
-    localStorage.removeItem("zitex-lights");
+    localStorage.removeItem("ahmed-demo-v2");
+    localStorage.removeItem("ahmed-cart");
+    localStorage.removeItem("ahmed-lights");
     sessionStorage.clear();
   });
   await page.reload();
@@ -140,9 +140,9 @@ const fs = require("node:fs");
   assert.deepEqual(errors, []);
   // Leave the user a clean demo, rather than our edited product and test order.
   await page.evaluate(() => {
-    localStorage.removeItem("zitex-demo-v2");
-    localStorage.removeItem("zitex-cart");
-    localStorage.removeItem("zitex-lights");
+    localStorage.removeItem("ahmed-demo-v2");
+    localStorage.removeItem("ahmed-cart");
+    localStorage.removeItem("ahmed-lights");
     sessionStorage.clear();
   });
   console.log(

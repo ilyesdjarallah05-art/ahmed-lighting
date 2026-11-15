@@ -6,6 +6,8 @@ The frontend is ready to run locally. These steps activate shared live products,
 
 In **SQL Editor**, paste and run `supabase/schema.sql` **once in your new project**. It creates products, categories, public shop settings, protected orders, admin membership, stock/order functions, row-level security and the image bucket. It does not change your existing store or project.
 
+If the main schema is already installed, run only `supabase/migrations/202609190001_add_virtual_tours.sql`. This adds the editable `virtual_tours` table, its row-level security policies and the public `tour-panoramas` bucket without changing products or orders.
+
 Optionally run `supabase/seed.sql` to publish the six sample products. Their local images are already included in this application. Otherwise your catalog starts empty and you add real products from the admin.
 
 Under **Authentication → Users**, create an administrator user with an email and password. Copy that user's UUID, then run:
@@ -31,6 +33,8 @@ Find these values in your project's Connect dialog or API settings. The publisha
 Restart `npm run dev`. On a deployed site, set the same variables in your host's environment settings and rebuild/redeploy: Next.js embeds public values during the build.
 
 Open `/admin` and sign in with the administrator account. Test a product upload, a product edit and your logo. Saving `Publish product` makes the product visible across visitors. The two image fields support local asset paths, image URLs or upload to Supabase Storage. Additional gallery images currently use one URL/path per line.
+
+Open **360° tours** in the admin and create a showroom. Upload 2:1 equirectangular JPG, PNG or WebP files (4096×2048 recommended, 30 MB maximum), set the opening camera view, and add links between scenes. Published tours appear at `/tour-360` and in the main navigation.
 
 ## 3. Telegram channel
 

@@ -8,6 +8,7 @@ import type {
   Product,
   Settings,
   StoreData,
+  VirtualTour,
 } from "./types";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -31,14 +32,14 @@ export function db() {
 }
 function localRead(): StoreData {
   try {
-    const saved = JSON.parse(localStorage.getItem("zitex-demo-v2") || "null");
+    const saved = JSON.parse(localStorage.getItem("ahmed-demo-v2") || "null");
     if (
       saved?.products &&
       saved?.categories &&
       saved?.settings &&
       saved?.orders
     )
-      return saved;
+      return { ...saved, tours: saved.tours || structuredClone(seed.tours) };
   } catch {
     /* default data */
   }
@@ -46,7 +47,7 @@ function localRead(): StoreData {
 }
 function localSave(data: StoreData) {
   try {
-    localStorage.setItem("zitex-demo-v2", JSON.stringify(data));
+    localStorage.setItem("ahmed-demo-v2", JSON.stringify(data));
   } catch {
     throw new Error(
       "Browser storage is full. Use smaller images or connect Supabase.",
@@ -69,7 +70,7 @@ export async function readStore(admin = false): Promise<StoreData> {
         };
   }
   const s = db();
-  const [products, categories, settings, orders] = await Promise.all([
+  const [products, categories, settings, orders, tours] = await Promise.all([
     s.from("products").select("*").order("created_at", { ascending: false }),
     s.from("categories").select("*").order("position"),
     s.from("site_settings").select("data").eq("id", 1).single(),
@@ -80,16 +81,24 @@ export async function readStore(admin = false): Promise<StoreData> {
           .order("created_at", { ascending: false })
           .limit(200)
       : Promise.resolve({ data: [], error: null }),
+    s.from("virtual_tours").select("*").order("position"),
   ]);
+  const tourRows = tours.error
+    ? tours.error.code === "PGRST205" ||
+      tours.error.message.includes("schema cache")
+      ? []
+      : checked(tours)
+    : tours.data || [];
   return {
     products: checked(products) || [],
     categories: checked(categories) || [],
     settings: { ...seed.settings, ...checked(settings)?.data },
     orders: checked(orders) || [],
+    tours: (tourRows as VirtualTour[]).filter((tour) => admin || tour.active),
   };
 }
 export async function isAdmin() {
-  if (isDemo()) return sessionStorage.getItem("zitex-demo-admin") === "true";
+  if (isDemo()) return sessionStorage.getItem("ahmed-demo-admin") === "true";
   if (!configured) return false;
   const result = await db().auth.getSession();
   if (result.error) throw result.error;
@@ -116,10 +125,10 @@ export async function signIn(email: string, password: string) {
 export function demoSignIn() {
   if (!isDemo())
     throw new Error("Demo access is available only on your local computer.");
-  sessionStorage.setItem("zitex-demo-admin", "true");
+  sessionStorage.setItem("ahmed-demo-admin", "true");
 }
 export async function signOut() {
-  if (isDemo()) sessionStorage.removeItem("zitex-demo-admin");
+  if (isDemo()) sessionStorage.removeItem("ahmed-demo-admin");
   else if (configured) {
     const result = await db().auth.signOut();
     if (result.error) throw result.error;
@@ -173,6 +182,35 @@ export async function saveCategory(category: Category) {
     localSave(data);
   } else checked(await db().from("categories").insert(category));
 }
+export async function saveTour(tour: VirtualTour) {
+  await guard();
+  if (isDemo()) {
+    const data = localRead();
+    const index = data.tours.findIndex((item) => item.id === tour.id);
+    if (index >= 0) data.tours[index] = { ...data.tours[index], ...tour };
+    else data.tours.unshift({ ...tour, created_at: new Date().toISOString() });
+    localSave(data);
+    return;
+  }
+  const result = await db().from("virtual_tours").upsert(tour);
+  if (
+    result.error &&
+    (result.error.code === "PGRST205" ||
+      result.error.message.includes("schema cache"))
+  )
+    throw new Error(
+      "La base Supabase n’a pas encore la table des visites 360°. Exécutez la migration fournie dans supabase/migrations.",
+    );
+  checked(result);
+}
+export async function deleteTour(id: string) {
+  await guard();
+  if (isDemo()) {
+    const data = localRead();
+    data.tours = data.tours.filter((tour) => tour.id !== id);
+    localSave(data);
+  } else checked(await db().from("virtual_tours").delete().eq("id", id));
+}
 export async function updateOrder(id: string, status: Order["status"]) {
   await guard();
   if (isDemo()) {
@@ -212,6 +250,36 @@ export async function uploadImage(file: File) {
       .upload(path, file, { contentType: file.type, cacheControl: "31536000" }),
   );
   return db().storage.from("lighting-images").getPublicUrl(path).data.publicUrl;
+}
+export async function uploadPanorama(file: File) {
+  await guard();
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type))
+    throw new Error("Utilisez une image panoramique JPG, PNG ou WebP.");
+  if (file.size > 30 * 1024 * 1024)
+    throw new Error("Chaque panorama doit être plus petit que 30 Mo.");
+  if (isDemo()) {
+    if (file.size > 2 * 1024 * 1024)
+      throw new Error(
+        "Le mode démo du navigateur accepte 2 Mo maximum. Connectez Supabase pour les panoramas haute résolution.",
+      );
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () =>
+        reject(new Error("Impossible de lire ce panorama."));
+      reader.readAsDataURL(file);
+    });
+  }
+  const extension =
+    file.type === "image/jpeg" ? "jpg" : file.type.split("/")[1];
+  const path = `${crypto.randomUUID()}.${extension}`;
+  checked(
+    await db().storage.from("tour-panoramas").upload(path, file, {
+      contentType: file.type,
+      cacheControl: "31536000",
+    }),
+  );
+  return db().storage.from("tour-panoramas").getPublicUrl(path).data.publicUrl;
 }
 export async function placeOrder(
   payload: OrderPayload,

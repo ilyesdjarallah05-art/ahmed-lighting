@@ -43,7 +43,7 @@ create table public.products (
 );
 create index products_category_active on public.products(category_id) where active;
 create table public.site_settings (id integer primary key check (id = 1), data jsonb not null default '{}');
-insert into public.site_settings(id, data) values (1, '{"store_name":"zitex","tagline":"L''éclairage, pensé pour vous.","currency":"DZD","locale":"fr-DZ"}');
+insert into public.site_settings(id, data) values (1, '{"store_name":"Ahmed","tagline":"L''éclairage, pensé pour vous.","currency":"DZD","locale":"fr-DZ"}');
 insert into public.categories(id, name, name_ar, name_en, icon, position) values
   ('pendants','Suspensions','ثريات معلقة','Pendants','pendant',1),
   ('ceiling-lamps','Plafonniers','مصابيح سقف','Ceiling lamps','ceiling',2),
@@ -67,11 +67,25 @@ create table public.orders (
 create index orders_phone_rate on public.orders(phone, created_at desc);
 create index orders_ip_rate on public.orders(ip_hash, created_at desc);
 
+create table public.virtual_tours (
+  id uuid primary key default gen_random_uuid(),
+  title text not null check (length(title) between 1 and 120),
+  title_ar text not null default '', title_en text not null default '',
+  description text not null default '' check (length(description) <= 3000),
+  description_ar text not null default '', description_en text not null default '',
+  location text not null default '', location_ar text not null default '', location_en text not null default '',
+  cover_image text not null default '', active boolean not null default false, position integer not null default 0,
+  scenes jsonb not null default '[]'::jsonb check (jsonb_typeof(scenes) = 'array' and jsonb_array_length(scenes) <= 60),
+  created_at timestamptz not null default now(), updated_at timestamptz not null default now()
+);
+create index virtual_tours_published on public.virtual_tours(position) where active;
+
 alter table public.admins enable row level security;
 alter table public.categories enable row level security;
 alter table public.products enable row level security;
 alter table public.site_settings enable row level security;
 alter table public.orders enable row level security;
+alter table public.virtual_tours enable row level security;
 create policy "Read own admin membership" on public.admins for select to authenticated using (user_id = (select auth.uid()));
 create policy "Public categories" on public.categories for select to anon, authenticated using (true);
 create policy "Admin categories" on public.categories for all to authenticated using ((select public.is_store_admin())) with check ((select public.is_store_admin()));
@@ -81,13 +95,17 @@ create policy "Public shop settings" on public.site_settings for select to anon,
 create policy "Admin shop settings" on public.site_settings for update to authenticated using ((select public.is_store_admin())) with check ((select public.is_store_admin()));
 create policy "Admin read orders" on public.orders for select to authenticated using ((select public.is_store_admin()));
 create policy "Admin update order status" on public.orders for update to authenticated using ((select public.is_store_admin())) with check ((select public.is_store_admin()));
-revoke all on public.admins, public.categories, public.products, public.site_settings, public.orders from anon, authenticated;
+create policy "Published virtual tours" on public.virtual_tours for select to anon, authenticated using (active or (select public.is_store_admin()));
+create policy "Admin virtual tours" on public.virtual_tours for all to authenticated using ((select public.is_store_admin())) with check ((select public.is_store_admin()));
+revoke all on public.admins, public.categories, public.products, public.site_settings, public.orders, public.virtual_tours from anon, authenticated;
 grant select on public.categories, public.products, public.site_settings to anon, authenticated;
 grant select on public.admins, public.orders to authenticated;
 grant insert, update, delete on public.categories, public.products to authenticated;
 grant update(data) on public.site_settings to authenticated;
 grant update(status) on public.orders to authenticated;
-grant all on public.admins, public.categories, public.products, public.site_settings, public.orders to service_role;
+grant select on public.virtual_tours to anon, authenticated;
+grant insert, update, delete on public.virtual_tours to authenticated;
+grant all on public.admins, public.categories, public.products, public.site_settings, public.orders, public.virtual_tours to service_role;
 
 -- Only the Edge Function may create orders. Prices and stock are calculated inside one transaction.
 create function public.create_lighting_order(p_request_id uuid, p_customer jsonb, p_items jsonb, p_ip_hash text)
@@ -167,6 +185,13 @@ create policy "Public lighting images" on storage.objects for select to anon, au
 create policy "Admin lighting uploads" on storage.objects for insert to authenticated with check (bucket_id = 'lighting-images' and (select public.is_store_admin()));
 create policy "Admin lighting image changes" on storage.objects for update to authenticated using (bucket_id = 'lighting-images' and (select public.is_store_admin())) with check (bucket_id = 'lighting-images' and (select public.is_store_admin()));
 create policy "Admin lighting image removal" on storage.objects for delete to authenticated using (bucket_id = 'lighting-images' and (select public.is_store_admin()));
+
+insert into storage.buckets(id, name, public, file_size_limit, allowed_mime_types)
+values ('tour-panoramas','tour-panoramas',true,31457280,array['image/jpeg','image/png','image/webp']);
+create policy "Public tour panoramas" on storage.objects for select to anon, authenticated using (bucket_id = 'tour-panoramas');
+create policy "Admin tour panorama uploads" on storage.objects for insert to authenticated with check (bucket_id = 'tour-panoramas' and (select public.is_store_admin()));
+create policy "Admin tour panorama changes" on storage.objects for update to authenticated using (bucket_id = 'tour-panoramas' and (select public.is_store_admin())) with check (bucket_id = 'tour-panoramas' and (select public.is_store_admin()));
+create policy "Admin tour panorama removal" on storage.objects for delete to authenticated using (bucket_id = 'tour-panoramas' and (select public.is_store_admin()));
 
 -- After creating your admin user under Authentication > Users, run:
 -- insert into public.admins(user_id) values ('YOUR_AUTH_USER_UUID');

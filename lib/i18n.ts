@@ -8,12 +8,25 @@ export const messages: Record<Language, Record<string, string>> = {
     shopByType: "Par catégorie",
     newArrivals: "Nouveautés",
     ourStory: "Notre histoire",
+    tour360: "Visite 360°",
+    tourEyebrow: "NOS SHOWROOMS, COMME SI VOUS Y ÉTIEZ",
+    tourTitle: "Entrez dans la lumière.",
+    tourSubtitle:
+      "Explorez nos espaces à 360°, passez d’une galerie à l’autre et découvrez chaque luminaire dans son ambiance.",
+    tourChooseStore: "Choisir un showroom",
+    tourSpaces: "ESPACES",
+    tourSpacesHint:
+      "Choisissez un espace ou utilisez les repères dans l’image.",
+    tourDragHint: "Faites glisser pour regarder autour de vous",
+    tourEmptyTitle: "La visite ouvrira bientôt.",
+    tourEmptyDesc:
+      "Nos showrooms sont en cours de préparation. Revenez prochainement pour les explorer à 360°.",
     theCollection: "La collection",
     searchPlaceholder: "Trouvez votre luminaire…",
     searchLabel: "Rechercher",
     basket: "Panier",
     menu: "Menu",
-    exploreBrand: "Explorer Zitex",
+    exploreBrand: "Explorer Ahmed",
     searchAndFilters: "Recherche & filtres",
     skipToContent: "Passer au contenu",
     lightsTurnOn: "Allumer la lumière",
@@ -37,8 +50,10 @@ export const messages: Record<Language, Record<string, string>> = {
     atmosphereChange: "Un simple changement d'atmosphère.",
     findingLight: "Recherche de luminaires en cours…",
     noCollectionTitle: "Une nouvelle collection arrive bientôt.",
-    noCollectionDesc: "Notre sélection de luminaires apparaîtra ici très prochainement.",
-    sceneNoteHome: "Voyez-le sous un autre jour. Allumez pour visualiser chaque modèle de nuit.",
+    noCollectionDesc:
+      "Notre sélection de luminaires apparaîtra ici très prochainement.",
+    sceneNoteHome:
+      "Voyez-le sous un autre jour. Allumez pour visualiser chaque modèle de nuit.",
     philosophyNumber: "01 / NOTRE PHILOSOPHIE",
     philosophyTitle: "Une pièce devient un foyer",
     philosophyEm: "avec la bonne lumière.",
@@ -62,7 +77,8 @@ export const messages: Record<Language, Record<string, string>> = {
     cartEmptyDesc: "Votre panier attend de belles pièces.",
     exploreLighting: "Explorer les luminaires",
     subtotal: "Sous-total",
-    cartNotice: "Les frais de livraison sont confirmés par notre équipe. Aucun paiement en ligne.",
+    cartNotice:
+      "Les frais de livraison sont confirmés par notre équipe. Aucun paiement en ligne.",
     requestOrder: "Finaliser la demande",
     keepExploring: "Continuer mes achats",
     remove: "Supprimer",
@@ -70,7 +86,8 @@ export const messages: Record<Language, Record<string, string>> = {
     // Catalog & Filters
     theCollectionTitle: "La collection.",
     resultsFor: "Résultats pour",
-    piecesForCorner: "Des pièces pour chaque recoin. De la lumière pour chaque moment.",
+    piecesForCorner:
+      "Des pièces pour chaque recoin. De la lumière pour chaque moment.",
     refineSearch: "Filtrer la recherche",
     filters: "Filtres",
     lightingType: "Type de luminaire",
@@ -100,9 +117,11 @@ export const messages: Record<Language, Record<string, string>> = {
     daylightNatural: "Lumière du jour. Naturel et élégant.",
     productDetailLabel: "Détail du produit",
     productUnavailableTitle: "Ce luminaire n'est plus dans la collection.",
-    productUnavailableDesc: "Découvrez nos nombreux autres modèles disponibles.",
+    productUnavailableDesc:
+      "Découvrez nos nombreux autres modèles disponibles.",
     addToYourLightEdit: "Ajouter à ma sélection",
-    noOnlinePaymentNote: "Aucun paiement en ligne. Nous confirmons chaque commande par téléphone.",
+    noOnlinePaymentNote:
+      "Aucun paiement en ligne. Nous confirmons chaque commande par téléphone.",
     specMaterial: "Matériau",
     specDimensions: "Dimensions",
     specPower: "Puissance / ampoule",
@@ -112,16 +131,21 @@ export const messages: Record<Language, Record<string, string>> = {
 
     // Order page
     orderTitle: "Votre commande.",
-    orderSubtitle: "Aucun paiement en ligne. Notre équipe vous contactera pour confirmer les détails.",
+    orderSubtitle:
+      "Aucun paiement en ligne. Notre équipe vous contactera pour confirmer les détails.",
     orderSuccessTitle: "Votre demande est bien enregistrée !",
     orderDemoTitle: "Commande de démonstration enregistrée.",
-    orderSuccessDesc: "Notre équipe vous appellera sous peu pour confirmer la disponibilité, la livraison et le total final.",
-    orderDemoDesc: "Ceci est une démonstration locale. Vous pouvez consulter cette demande dans le panneau d'administration.",
+    orderSuccessDesc:
+      "Notre équipe vous appellera sous peu pour confirmer la disponibilité, la livraison et le total final.",
+    orderDemoDesc:
+      "Ceci est une démonstration locale. Vous pouvez consulter cette demande dans le panneau d'administration.",
     yourReference: "Votre référence",
     orderEmptyTitle: "Votre panier est vide.",
-    orderEmptyDesc: "Choisissez quelques luminaires avant d'envoyer votre commande.",
+    orderEmptyDesc:
+      "Choisissez quelques luminaires avant d'envoyer votre commande.",
     formWhereToGo: "Où devons-nous livrer vos luminaires ?",
-    demoNoticeOrder: "Mode démo local · Cette demande est stockée sur cet ordinateur.",
+    demoNoticeOrder:
+      "Mode démo local · Cette demande est stockée sur cet ordinateur.",
     fullName: "Nom et prénom *",
     phone: "Numéro de téléphone *",
     phonePlaceholder: "Ex. 0555 12 34 56",
@@ -130,22 +154,26 @@ export const messages: Record<Language, Record<string, string>> = {
     deliveryAddress: "Adresse de livraison complète *",
     notesField: "Remarques ou instructions de livraison (facultatif)",
     notesPlaceholder: "Consignes de livraison ou question sur vos luminaires…",
-    consentText: "J'accepte de transmettre mes coordonnées à l'équipe Zitex pour le traitement et la confirmation de cette commande.",
+    consentText:
+      "J'accepte de transmettre mes coordonnées à l'équipe Ahmed pour le traitement et la confirmation de cette commande.",
     sendingRequest: "Envoi de votre demande…",
     sendOrderRequest: "Envoyer ma demande de commande",
-    nothingChargedOnline: "Rien n'est payé en ligne. Confirmation téléphonique préalable.",
+    nothingChargedOnline:
+      "Rien n'est payé en ligne. Confirmation téléphonique préalable.",
     orderSummaryTitle: "Résumé de la commande",
     editBasket: "Modifier le panier",
 
     // Footer
-    footerTagline: "Des pièces choisies avec soin. Une belle lumière au quotidien.",
+    footerTagline:
+      "Des pièces choisies avec soin. Une belle lumière au quotidien.",
     findYourLight: "Trouver votre lumière",
     aboutUs: "À propos",
     deliveryAndOrdering: "Livraison & commande",
     storeAdminLink: "Administration du magasin",
     letsTalkLighting: "Parlons luminaires",
-    contactNotice: "Sélectionnez vos pièces. Notre équipe s'occupe de tous les détails.",
-    allRightsReserved: "Tous droits réservés. Zitex Lighting.",
+    contactNotice:
+      "Sélectionnez vos pièces. Notre équipe s'occupe de tous les détails.",
+    allRightsReserved: "Tous droits réservés. Ahmed Lighting.",
     privacy: "Confidentialité",
 
     // Finish names
@@ -178,6 +206,18 @@ export const messages: Record<Language, Record<string, string>> = {
     shopByType: "حسب الفئة",
     newArrivals: "وصل حديثاً",
     ourStory: "قصتنا",
+    tour360: "جولة 360°",
+    tourEyebrow: "معارضنا كما لو كنتم هنا",
+    tourTitle: "ادخلوا عالم الإضاءة.",
+    tourSubtitle:
+      "تجولوا في معارضنا بزاوية 360° وانتقلوا بين الأروقة لاكتشاف كل وحدة إنارة في أجوائها.",
+    tourChooseStore: "اختيار المعرض",
+    tourSpaces: "المساحات",
+    tourSpacesHint: "اختاروا مساحة أو استخدموا نقاط الانتقال داخل الصورة.",
+    tourDragHint: "اسحبوا الصورة للنظر من حولكم",
+    tourEmptyTitle: "الجولة ستفتح قريباً.",
+    tourEmptyDesc:
+      "نعمل حالياً على تجهيز معارضنا. عودوا قريباً لاستكشافها بزاوية 360°.",
     theCollection: "المجموعة",
     searchPlaceholder: "ابحث عن إضاءتك المثالية…",
     searchLabel: "بحث",
@@ -232,7 +272,8 @@ export const messages: Record<Language, Record<string, string>> = {
     cartEmptyDesc: "لم تقم بإضافة أي منتج بعد.",
     exploreLighting: "تصفح الإضاءة",
     subtotal: "المجموع الفرعي",
-    cartNotice: "يتم تحديد تكاليف التوصيل وتأكيدها عبر الهاتف. لا يوجد دفع إلكتروني.",
+    cartNotice:
+      "يتم تحديد تكاليف التوصيل وتأكيدها عبر الهاتف. لا يوجد دفع إلكتروني.",
     requestOrder: "إتمام الطلب",
     keepExploring: "مواصلة التسوق",
     remove: "حذف",
@@ -272,7 +313,8 @@ export const messages: Record<Language, Record<string, string>> = {
     productUnavailableTitle: "هذا المنتج غير متوفر في التشكيلة حالياً.",
     productUnavailableDesc: "يمكنك استكشاف العديد من المنتجات الرائعة الأخرى.",
     addToYourLightEdit: "إضافة إلى طلبي",
-    noOnlinePaymentNote: "بدون دفع إلكتروني. نتصل بك لتأكيد كل تفاصيل طلبك قبل الإرسال.",
+    noOnlinePaymentNote:
+      "بدون دفع إلكتروني. نتصل بك لتأكيد كل تفاصيل طلبك قبل الإرسال.",
     specMaterial: "المادة",
     specDimensions: "الأبعاد",
     specPower: "القدرة / المصباح",
@@ -282,16 +324,20 @@ export const messages: Record<Language, Record<string, string>> = {
 
     // Order page
     orderTitle: "تأكيد طلبك.",
-    orderSubtitle: "لا يوجد دفع إلكتروني عبر الموقع. سيتصل بك فريقنا لتأكيد طلبك.",
+    orderSubtitle:
+      "لا يوجد دفع إلكتروني عبر الموقع. سيتصل بك فريقنا لتأكيد طلبك.",
     orderSuccessTitle: "تم استلام طلبك بنجاح !",
     orderDemoTitle: "تم تسجيل الطلب التجريبي محلياً.",
-    orderSuccessDesc: "سيتصل بك موظف من فريقنا قريباً لتأكيد التوفر، العنوان، وموعد التوصيل.",
-    orderDemoDesc: "هذه تجربة محلية. يمكنك مشاهدة تفاصيل هذا الطلب في لوحة التحكم.",
+    orderSuccessDesc:
+      "سيتصل بك موظف من فريقنا قريباً لتأكيد التوفر، العنوان، وموعد التوصيل.",
+    orderDemoDesc:
+      "هذه تجربة محلية. يمكنك مشاهدة تفاصيل هذا الطلب في لوحة التحكم.",
     yourReference: "رقم مرجع الطلب",
     orderEmptyTitle: "سلة التسوق فارغة.",
     orderEmptyDesc: "يرجى اختيار بعض المنتجات قبل إرسال طلب الشراء.",
     formWhereToGo: "إلى أين نرسل طلبك ؟",
-    demoNoticeOrder: "نسخة تجريبية محلية · يتم حفظ هذا الطلب على هذا الجهاز فقط.",
+    demoNoticeOrder:
+      "نسخة تجريبية محلية · يتم حفظ هذا الطلب على هذا الجهاز فقط.",
     fullName: "الاسم الكامل *",
     phone: "رقم الهاتف *",
     phonePlaceholder: "مثال: 0555 12 34 56",
@@ -300,10 +346,12 @@ export const messages: Record<Language, Record<string, string>> = {
     deliveryAddress: "العنوان بالتفصيل *",
     notesField: "ملاحظات أو توجيهات خاصة بالتوصيل (اختياري)",
     notesPlaceholder: "أي ملاحظة حول التوصيل أو مواعيد الاتصال…",
-    consentText: "أوافق على مشاركة معلوماتي مع فريق المتجر لتأكيد هذا الطلب والتوصيل.",
+    consentText:
+      "أوافق على مشاركة معلوماتي مع فريق المتجر لتأكيد هذا الطلب والتوصيل.",
     sendingRequest: "جاري إرسال طلبك…",
     sendOrderRequest: "إرسال طلب الشراء",
-    nothingChargedOnline: "لا يتم الدفع عبر الإنترنت. الدفع عند الاستلام بعد التأكيد الهاتفي.",
+    nothingChargedOnline:
+      "لا يتم الدفع عبر الإنترنت. الدفع عند الاستلام بعد التأكيد الهاتفي.",
     orderSummaryTitle: "ملخص الطلب",
     editBasket: "تعديل السلة",
 
@@ -348,12 +396,24 @@ export const messages: Record<Language, Record<string, string>> = {
     shopByType: "Shop by type",
     newArrivals: "New arrivals",
     ourStory: "Our story",
+    tour360: "360° tour",
+    tourEyebrow: "OUR SHOWROOMS, AS IF YOU WERE HERE",
+    tourTitle: "Step into the light.",
+    tourSubtitle:
+      "Explore our spaces in 360°, move between galleries and see every light in its setting.",
+    tourChooseStore: "Choose a showroom",
+    tourSpaces: "SPACES",
+    tourSpacesHint: "Choose a space or use the markers inside the image.",
+    tourDragHint: "Drag to look around",
+    tourEmptyTitle: "The tour will open soon.",
+    tourEmptyDesc:
+      "Our showrooms are being prepared. Come back soon to explore them in 360°.",
     theCollection: "The collection",
     searchPlaceholder: "Find your light…",
     searchLabel: "Search",
     basket: "Basket",
     menu: "Menu",
-    exploreBrand: "Explore Zitex",
+    exploreBrand: "Explore Ahmed",
     searchAndFilters: "Search & filters",
     skipToContent: "Skip to content",
     lightsTurnOn: "Turn on the lights",
@@ -378,7 +438,8 @@ export const messages: Record<Language, Record<string, string>> = {
     findingLight: "Finding your light…",
     noCollectionTitle: "A new collection is on its way.",
     noCollectionDesc: "Our lighting collection will appear here soon.",
-    sceneNoteHome: "See it in a different light. Switch on to preview each piece after dark.",
+    sceneNoteHome:
+      "See it in a different light. Switch on to preview each piece after dark.",
     philosophyNumber: "01 / OUR PHILOSOPHY",
     philosophyTitle: "A room becomes a home",
     philosophyEm: "with the right light.",
@@ -402,7 +463,8 @@ export const messages: Record<Language, Record<string, string>> = {
     cartEmptyDesc: "Your basket is waiting for something beautiful.",
     exploreLighting: "Explore lighting",
     subtotal: "Subtotal",
-    cartNotice: "Delivery charges are confirmed by our team. No payment is taken online.",
+    cartNotice:
+      "Delivery charges are confirmed by our team. No payment is taken online.",
     requestOrder: "Request your order",
     keepExploring: "Keep exploring",
     remove: "Remove",
@@ -442,7 +504,8 @@ export const messages: Record<Language, Record<string, string>> = {
     productUnavailableTitle: "This light is no longer in the collection.",
     productUnavailableDesc: "There are plenty of other pieces to discover.",
     addToYourLightEdit: "Add to your light edit",
-    noOnlinePaymentNote: "No online payment. We personally confirm every order.",
+    noOnlinePaymentNote:
+      "No online payment. We personally confirm every order.",
     specMaterial: "Material",
     specDimensions: "Dimensions",
     specPower: "Power / bulb",
@@ -452,16 +515,20 @@ export const messages: Record<Language, Record<string, string>> = {
 
     // Order page
     orderTitle: "Your order.",
-    orderSubtitle: "No online payment. Our team will contact you to confirm your request.",
+    orderSubtitle:
+      "No online payment. Our team will contact you to confirm your request.",
     orderSuccessTitle: "Your request is received.",
     orderDemoTitle: "Your demo order is saved.",
-    orderSuccessDesc: "Our team will contact you to confirm availability, delivery and the final total.",
-    orderDemoDesc: "This is a local demonstration. You can view this request in the admin panel; no Telegram message was sent.",
+    orderSuccessDesc:
+      "Our team will contact you to confirm availability, delivery and the final total.",
+    orderDemoDesc:
+      "This is a local demonstration. You can view this request in the admin panel; no Telegram message was sent.",
     yourReference: "Your reference",
     orderEmptyTitle: "Your light edit is empty.",
     orderEmptyDesc: "Choose a few pieces before requesting your order.",
     formWhereToGo: "Where should your light go?",
-    demoNoticeOrder: "Local demo · This request will be saved on this computer. Telegram will activate after setup.",
+    demoNoticeOrder:
+      "Local demo · This request will be saved on this computer. Telegram will activate after setup.",
     fullName: "Full name *",
     phone: "Phone number *",
     phonePlaceholder: "Your contact number",
@@ -469,11 +536,14 @@ export const messages: Record<Language, Record<string, string>> = {
     cityRegion: "City / region *",
     deliveryAddress: "Delivery address *",
     notesField: "Anything we should know? (optional)",
-    notesPlaceholder: "Delivery instructions or a question about your lighting…",
-    consentText: "I agree to share my contact and delivery details with the store team so they can handle this request.",
+    notesPlaceholder:
+      "Delivery instructions or a question about your lighting…",
+    consentText:
+      "I agree to share my contact and delivery details with the store team so they can handle this request.",
     sendingRequest: "Sending your request…",
     sendOrderRequest: "Send order request",
-    nothingChargedOnline: "We’ll confirm the details with you. Nothing is charged online.",
+    nothingChargedOnline:
+      "We’ll confirm the details with you. Nothing is charged online.",
     orderSummaryTitle: "Your light edit",
     editBasket: "Edit your basket",
 
@@ -485,7 +555,7 @@ export const messages: Record<Language, Record<string, string>> = {
     storeAdminLink: "Store admin ↗",
     letsTalkLighting: "Let’s talk lighting",
     contactNotice: "Choose your pieces. Our team takes care of the details.",
-    allRightsReserved: "All rights reserved. Zitex Lighting.",
+    allRightsReserved: "All rights reserved. Ahmed Lighting.",
     privacy: "Privacy",
 
     // Finish names
@@ -512,7 +582,11 @@ export const messages: Record<Language, Record<string, string>> = {
   },
 };
 
-export function t(key: string, lang: Language = "fr", params?: Record<string, string | number>): string {
+export function t(
+  key: string,
+  lang: Language = "fr",
+  params?: Record<string, string | number>,
+): string {
   const dict = messages[lang] || messages.fr;
   let text = dict[key] || messages.fr[key] || messages.en[key] || key;
   if (params) {

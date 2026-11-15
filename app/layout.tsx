@@ -14,7 +14,7 @@ const manrope = Manrope({
   display: "swap",
 });
 export const metadata: Metadata = {
-  title: { default: "Zitex — Light, considered.", template: "%s — Zitex" },
+  title: { default: "Ahmed — Light, considered.", template: "%s — Ahmed" },
   description:
     "Thoughtfully chosen lighting for everyday living. Explore pendants, floor lamps, table lamps and architectural lighting.",
   icons: { icon: "/assets/favicon.svg" },
@@ -32,6 +32,7 @@ export default function RootLayout({
       className={`${dmSans.variable} ${manrope.variable}`}
     >
       <head>
+        <link rel="stylesheet" href="/vendor/pannellum/pannellum.css" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

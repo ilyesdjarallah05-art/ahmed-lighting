@@ -70,6 +70,47 @@ export type Settings = {
   privacy_policy_ar?: string;
   privacy_policy_en?: string;
 };
+export type PanoramaHotspot = {
+  id: string;
+  target_scene_id: string;
+  text: string;
+  text_ar?: string;
+  text_en?: string;
+  pitch: number;
+  yaw: number;
+};
+export type PanoramaScene = {
+  id: string;
+  title: string;
+  title_ar?: string;
+  title_en?: string;
+  description?: string;
+  description_ar?: string;
+  description_en?: string;
+  image_url: string;
+  pitch: number;
+  yaw: number;
+  hfov: number;
+  position: number;
+  hotspots: PanoramaHotspot[];
+};
+export type VirtualTour = {
+  id: string;
+  title: string;
+  title_ar?: string;
+  title_en?: string;
+  description: string;
+  description_ar?: string;
+  description_en?: string;
+  location: string;
+  location_ar?: string;
+  location_en?: string;
+  cover_image: string;
+  active: boolean;
+  position: number;
+  scenes: PanoramaScene[];
+  created_at?: string;
+};
 export type CartItem = {
   product_id: string;
   color: string;
@@ -106,6 +147,7 @@ export type StoreData = {
   categories: Category[];
   settings: Settings;
   orders: Order[];
+  tours: VirtualTour[];
 };
 export type OrderPayload = {
   request_id: string;

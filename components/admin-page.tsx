@@ -17,6 +17,7 @@ import {
   Lightbulb,
   Send,
   Languages,
+  ScanLine,
 } from "lucide-react";
 import { Brand } from "./storefront";
 import { Modal } from "./ui";
@@ -24,8 +25,19 @@ import { useStore } from "./store-provider";
 import * as api from "@/lib/store";
 import { finishLabel, money, priceOf, safeImage } from "@/lib/catalog";
 import { seed } from "@/lib/seed";
-import { autoTranslateCategory, autoTranslateProduct, translateLightingText } from "@/lib/translate";
-import type { Product, Order, Settings, StoreData, Language } from "@/lib/types";
+import {
+  autoTranslateCategory,
+  autoTranslateProduct,
+  translateLightingText,
+} from "@/lib/translate";
+import type {
+  Product,
+  Order,
+  Settings,
+  StoreData,
+  Language,
+} from "@/lib/types";
+import { ToursAdmin } from "./tour-admin";
 
 const blankProduct = (): Product => ({
   id: crypto.randomUUID(),
@@ -58,7 +70,9 @@ const blankProduct = (): Product => ({
 });
 
 const messageOf = (e: unknown) =>
-  e instanceof Error ? e.message : "Une erreur est survenue. Veuillez réessayer.";
+  e instanceof Error
+    ? e.message
+    : "Une erreur est survenue. Veuillez réessayer.";
 
 export function AdminPage() {
   const store = useStore();
@@ -74,6 +88,13 @@ export function AdminPage() {
   const [orderStatus, setOrderStatus] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [categoryModal, setCategoryModal] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.dir = "ltr";
+    return () => {
+      document.documentElement.dir = store.lang === "ar" ? "rtl" : "ltr";
+    };
+  }, [store.lang]);
 
   async function load() {
     const d = await api.readStore(true);
@@ -151,7 +172,10 @@ export function AdminPage() {
             <br />
             <em>illuminé.</em>
           </h1>
-          <p>Gérez votre collection de luminaires, vos coordonnées et vos commandes.</p>
+          <p>
+            Gérez votre collection de luminaires, vos coordonnées et vos
+            commandes.
+          </p>
 
           {api.configured ? (
             <form onSubmit={login} className="grid gap-4">
@@ -182,8 +206,9 @@ export function AdminPage() {
           ) : api.isDemo() ? (
             <>
               <p className="notice">
-                Aperçu démo local · Les modifications sont enregistrées sur cet ordinateur. Connectez
-                Supabase pour activer les comptes sécurisés et les notifications Telegram.
+                Aperçu démo local · Les modifications sont enregistrées sur cet
+                ordinateur. Connectez Supabase pour activer les comptes
+                sécurisés et les notifications Telegram.
               </p>
               <button
                 className="button button-dark w-full mt-3"
@@ -192,12 +217,14 @@ export function AdminPage() {
                   void load().then(() => setAuthenticated(true));
                 }}
               >
-                Ouvrir l'administration de démonstration <ArrowUpRight size={17} />
+                Ouvrir l'administration de démonstration{" "}
+                <ArrowUpRight size={17} />
               </button>
             </>
           ) : (
             <p className="notice">
-              Veuillez connecter votre projet Supabase dans .env.local pour activer la connexion administrateur.
+              Veuillez connecter votre projet Supabase dans .env.local pour
+              activer la connexion administrateur.
             </p>
           )}
           {error && (
@@ -216,6 +243,7 @@ export function AdminPage() {
     { id: "dashboard", name: "Tableau de bord", icon: LayoutDashboard },
     { id: "products", name: "Produits", icon: Package },
     { id: "orders", name: "Commandes", icon: ShoppingBag },
+    { id: "tours", name: "Visites 360°", icon: ScanLine },
     { id: "settings", name: "Réglages de la boutique", icon: SettingsIcon },
   ];
 
@@ -269,7 +297,7 @@ export function AdminPage() {
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "zitex-commandes.csv";
+    a.download = "ahmed-commandes.csv";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -368,7 +396,10 @@ export function AdminPage() {
       <div className="admin-empty">
         <ShoppingBag size={28} />
         <h3>Aucune commande pour le moment.</h3>
-        <p>Les demandes des clients apparaîtront ici avec leurs coordonnées et leurs articles choisis.</p>
+        <p>
+          Les demandes des clients apparaîtront ici avec leurs coordonnées et
+          leurs articles choisis.
+        </p>
       </div>
     );
 
@@ -424,18 +455,20 @@ export function AdminPage() {
             <Link className="button button-outline" href="/" target="_blank">
               Voir la boutique <ArrowUpRight size={15} />
             </Link>
-            <button
-              className="button button-dark"
-              onClick={() =>
-                setEdit({
-                  ...blankProduct(),
-                  category_id: data.categories[0]?.id || "",
-                })
-              }
-            >
-              <Plus size={15} />
-              Nouveau produit
-            </button>
+            {(tab === "dashboard" || tab === "products") && (
+              <button
+                className="button button-dark"
+                onClick={() =>
+                  setEdit({
+                    ...blankProduct(),
+                    category_id: data.categories[0]?.id || "",
+                  })
+                }
+              >
+                <Plus size={15} />
+                Nouveau produit
+              </button>
+            )}
           </div>
         </header>
 
@@ -540,7 +573,11 @@ export function AdminPage() {
                           <img src={safeImage(p.image_off)} alt="" />
                           <div>
                             <strong>{p.name}</strong>
-                            {p.name_ar && <small className="text-[10px] text-[var(--muted)]">{p.name_ar}</small>}
+                            {p.name_ar && (
+                              <small className="text-[10px] text-[var(--muted)]">
+                                {p.name_ar}
+                              </small>
+                            )}
                             <small>{p.sku}</small>
                           </div>
                         </div>
@@ -650,8 +687,20 @@ export function AdminPage() {
             settings={data.settings}
             products={data.products}
             onSave={(settings) =>
-              action(() => api.saveSettings(settings), "Réglages du magasin enregistrés.")
+              action(
+                () => api.saveSettings(settings),
+                "Réglages du magasin enregistrés.",
+              )
             }
+          />
+        )}
+        {tab === "tours" && (
+          <ToursAdmin
+            tours={data.tours}
+            onChanged={async () => {
+              await load();
+              await store.refresh();
+            }}
           />
         )}
       </main>
@@ -690,7 +739,8 @@ export function AdminPage() {
         title="Supprimer ce luminaire ?"
       >
         <p className="mt-5">
-          « {remove?.name} » sera retiré de votre collection. Les commandes existantes conserveront les détails de cet article.
+          « {remove?.name} » sera retiré de votre collection. Les commandes
+          existantes conserveront les détails de cet article.
         </p>
         <div className="flex gap-3">
           <button
@@ -772,7 +822,8 @@ export function AdminPage() {
               </strong>
             </div>
             <p className="text-xs text-[var(--muted)] mt-2">
-              Les frais de livraison et la date d'envoi sont convenus avec le client par téléphone.
+              Les frais de livraison et la date d'envoi sont convenus avec le
+              client par téléphone.
             </p>
           </div>
         )}
@@ -786,7 +837,14 @@ function CategoryCreateForm({
   busy,
   totalCategories,
 }: {
-  onSave: (cat: { id: string; name: string; name_ar?: string; name_en?: string; icon: string; position: number }) => Promise<void>;
+  onSave: (cat: {
+    id: string;
+    name: string;
+    name_ar?: string;
+    name_en?: string;
+    icon: string;
+    position: number;
+  }) => Promise<void>;
   busy: boolean;
   totalCategories: number;
 }) {
@@ -826,7 +884,9 @@ function CategoryCreateForm({
       }}
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs text-[var(--muted)]">Traductions disponibles pour vos clients</span>
+        <span className="text-xs text-[var(--muted)]">
+          Traductions disponibles pour vos clients
+        </span>
         <button
           type="button"
           className="button button-outline text-xs py-1 px-3 min-h-0 h-auto"
@@ -876,7 +936,9 @@ function CategoryCreateForm({
           <option value="floor">Lampadaire (Floor)</option>
           <option value="spotlight">Spot orientable (Spotlight)</option>
           <option value="downlight">Spot encastré (Downlight)</option>
-          <option value="ceiling">Plafonnier / Éclairage général (Ceiling)</option>
+          <option value="ceiling">
+            Plafonnier / Éclairage général (Ceiling)
+          </option>
         </select>
       </label>
 
@@ -961,16 +1023,22 @@ function ProductForm({
       };
 
       if (!next.colors.length || !next.temperatures.length)
-        throw new Error("Ajoutez au moins une finition/couleur et une température de lumière.");
+        throw new Error(
+          "Ajoutez au moins une finition/couleur et une température de lumière.",
+        );
       if (next.sale_price !== null && next.sale_price >= next.price)
-        throw new Error("Le prix promotionnel doit être inférieur au prix normal.");
+        throw new Error(
+          "Le prix promotionnel doit être inférieur au prix normal.",
+        );
 
       const off = f.get("off_file") as File;
       const on = f.get("on_file") as File;
       if (off?.size) next.image_off = await api.uploadImage(off);
       if (on?.size) next.image_on = await api.uploadImage(on);
       if (!next.image_off)
-        throw new Error("Veuillez renseigner une image de jour pour le produit.");
+        throw new Error(
+          "Veuillez renseigner une image de jour pour le produit.",
+        );
 
       await onSave(next);
     } catch (e) {
@@ -1313,7 +1381,8 @@ function ProductForm({
             </label>
           </div>
           <p className="full">
-            Pour un effet optimal avec le bouton « Allumer la lumière », utilisez le même cadrage pour l'image de jour et l'image de nuit.
+            Pour un effet optimal avec le bouton « Allumer la lumière »,
+            utilisez le même cadrage pour l'image de jour et l'image de nuit.
           </p>
         </div>
 
@@ -1384,18 +1453,32 @@ function SettingsForm({
       ...prev,
       tagline_ar: prev.tagline_ar || translateLightingText(prev.tagline, "ar"),
       tagline_en: prev.tagline_en || translateLightingText(prev.tagline, "en"),
-      announcement_ar: prev.announcement_ar || translateLightingText(prev.announcement, "ar"),
-      announcement_en: prev.announcement_en || translateLightingText(prev.announcement, "en"),
-      hero_description_ar: prev.hero_description_ar || translateLightingText(prev.hero_description, "ar"),
-      hero_description_en: prev.hero_description_en || translateLightingText(prev.hero_description, "en"),
+      announcement_ar:
+        prev.announcement_ar || translateLightingText(prev.announcement, "ar"),
+      announcement_en:
+        prev.announcement_en || translateLightingText(prev.announcement, "en"),
+      hero_description_ar:
+        prev.hero_description_ar ||
+        translateLightingText(prev.hero_description, "ar"),
+      hero_description_en:
+        prev.hero_description_en ||
+        translateLightingText(prev.hero_description, "en"),
       about_ar: prev.about_ar || translateLightingText(prev.about, "ar"),
       about_en: prev.about_en || translateLightingText(prev.about, "en"),
       address_ar: prev.address_ar || prev.address,
       address_en: prev.address_en || prev.address,
-      delivery_info_ar: prev.delivery_info_ar || translateLightingText(prev.delivery_info, "ar"),
-      delivery_info_en: prev.delivery_info_en || translateLightingText(prev.delivery_info, "en"),
-      privacy_policy_ar: prev.privacy_policy_ar || translateLightingText(prev.privacy_policy, "ar"),
-      privacy_policy_en: prev.privacy_policy_en || translateLightingText(prev.privacy_policy, "en"),
+      delivery_info_ar:
+        prev.delivery_info_ar ||
+        translateLightingText(prev.delivery_info, "ar"),
+      delivery_info_en:
+        prev.delivery_info_en ||
+        translateLightingText(prev.delivery_info, "en"),
+      privacy_policy_ar:
+        prev.privacy_policy_ar ||
+        translateLightingText(prev.privacy_policy, "ar"),
+      privacy_policy_en:
+        prev.privacy_policy_en ||
+        translateLightingText(prev.privacy_policy, "en"),
     }));
   }
 
@@ -1770,7 +1853,9 @@ function SettingsForm({
       <div className="notice mt-6">
         <strong>Intégration Telegram</strong>
         <p className="mb-0 mt-2">
-          Le jeton de bot et l'identifiant du canal sont configurés en toute sécurité dans les secrets Supabase Edge Functions. Ils n'apparaissent jamais dans le code public.
+          Le jeton de bot et l'identifiant du canal sont configurés en toute
+          sécurité dans les secrets Supabase Edge Functions. Ils n'apparaissent
+          jamais dans le code public.
         </p>
       </div>
 

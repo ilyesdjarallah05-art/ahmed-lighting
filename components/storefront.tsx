@@ -40,7 +40,11 @@ import type { Product } from "@/lib/types";
 export function Brand() {
   const { settings, lang } = useStore();
   return (
-    <Link href="/" className="brand" aria-label={`${settings.store_name} ${t("home", lang)}`}>
+    <Link
+      href="/"
+      className="brand"
+      aria-label={`${settings.store_name} ${t("home", lang)}`}
+    >
       {settings.logo_url ? (
         <img
           className="brand-logo"
@@ -102,7 +106,7 @@ export function Header() {
             </div>
           </div>
           <Link href="/catalog?sort=newest">{t("newArrivals", s.lang)}</Link>
-          <Link href="/#about">{t("ourStory", s.lang)}</Link>
+          <Link href="/tour-360">{t("tour360", s.lang)}</Link>
         </nav>
         <div className="header-actions">
           <LanguageSwitch className="header-lang-desktop" />
@@ -171,8 +175,8 @@ export function Header() {
             <Link href="/catalog?sort=newest" onClick={() => setMenu(false)}>
               {t("newArrivals", s.lang)}
             </Link>
-            <Link href="/#about" onClick={() => setMenu(false)}>
-              {t("ourStory", s.lang)}
+            <Link href="/tour-360" onClick={() => setMenu(false)}>
+              {t("tour360", s.lang)}
             </Link>
             <Link href="/catalog?filters=open" onClick={() => setMenu(false)}>
               {t("searchAndFilters", s.lang)}
@@ -218,9 +222,16 @@ export function ProductCard({ product: p }: { product: Product }) {
       </Link>
       <div className="card-topline">
         <span>{catName}</span>
-        <div className="color-dots" aria-label={p.colors.map((c) => finishLabel(c, s.lang)).join(", ")}>
+        <div
+          className="color-dots"
+          aria-label={p.colors.map((c) => finishLabel(c, s.lang)).join(", ")}
+        >
           {p.colors.map((c) => (
-            <i key={c} style={{ background: finishColors[c] || "#999" }} title={finishLabel(c, s.lang)} />
+            <i
+              key={c}
+              style={{ background: finishColors[c] || "#999" }}
+              title={finishLabel(c, s.lang)}
+            />
           ))}
         </div>
       </div>
@@ -412,7 +423,7 @@ export function Footer() {
             <h3>{t("aboutUs", lang)}</h3>
             <ul>
               <li>
-                <Link href="/#about">{t("ourStory", lang)}</Link>
+                <Link href="/tour-360">{t("tour360", lang)}</Link>
               </li>
               <li>
                 <button
@@ -445,9 +456,7 @@ export function Footer() {
             {localized(s, "address", lang) && (
               <p>{localized(s, "address", lang)}</p>
             )}
-            {!s.phone && !s.email && (
-              <p>{t("contactNotice", lang)}</p>
-            )}
+            {!s.phone && !s.email && <p>{t("contactNotice", lang)}</p>}
             <div className="flex gap-4 text-xs">
               {safeLink(s.instagram) && (
                 <a
@@ -472,7 +481,8 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} {s.store_name}. {t("allRightsReserved", lang)}
+            © {new Date().getFullYear()} {s.store_name}.{" "}
+            {t("allRightsReserved", lang)}
           </span>
           <div>
             <span>{localized(s, "tagline", lang)}</span>
@@ -512,7 +522,11 @@ export function StoreShell({ children }: { children: React.ReactNode }) {
         <div className="notice container my-5 flex items-center justify-between gap-4">
           <span>{s.error}</span>
           <button className="text-link" onClick={() => void s.refresh()}>
-            {s.lang === "ar" ? "إعادة المحاولة" : s.lang === "en" ? "Retry" : "Réessayer"}
+            {s.lang === "ar"
+              ? "إعادة المحاولة"
+              : s.lang === "en"
+                ? "Retry"
+                : "Réessayer"}
           </button>
         </div>
       )}
@@ -563,7 +577,7 @@ export function HomePage() {
         <Scene
           off={hero?.image_off || "/assets/pendant-off.webp"}
           on={hero?.image_on || "/assets/pendant-on.webp"}
-          alt={heroName || "Zitex lighting hero"}
+          alt={heroName || "Ahmed lighting hero"}
           className="hero-visual"
           eager
         >
@@ -605,8 +619,7 @@ export function HomePage() {
           <div>
             <span className="eyebrow">{t("everydayCollection", s.lang)}</span>
             <h2>
-              {t("everydayTitle", s.lang)}{" "}
-              <em>{t("everydayEm", s.lang)}</em>
+              {t("everydayTitle", s.lang)} <em>{t("everydayEm", s.lang)}</em>
             </h2>
           </div>
           <Link className="text-link" href="/catalog">
@@ -632,9 +645,7 @@ export function HomePage() {
             />
           )}
         </div>
-        <p className="scene-note">
-          {t("sceneNoteHome", s.lang)}
-        </p>
+        <p className="scene-note">{t("sceneNoteHome", s.lang)}</p>
       </section>
 
       <section className="editorial-section container" id="about">
@@ -645,7 +656,9 @@ export function HomePage() {
             <br />
             <em>{t("philosophyEm", s.lang)}</em>
           </h2>
-          <p className="whitespace-pre-line">{localized(s.settings, "about", s.lang)}</p>
+          <p className="whitespace-pre-line">
+            {localized(s.settings, "about", s.lang)}
+          </p>
           <Link className="text-link" href="/catalog">
             {t("discoverAll", s.lang)} <ArrowUpRight size={15} />
           </Link>
